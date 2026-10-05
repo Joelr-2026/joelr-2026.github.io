@@ -237,7 +237,7 @@ ul {
 
 
 /* ============================================================
-   05. BUTTONS / LINKS
+   05. BUTTONS
 ============================================================ */
 
 .button {
@@ -324,8 +324,6 @@ ul {
     font-weight: 800;
 
     cursor: pointer;
-
-    transition: color 0.2s ease;
 }
 
 .text-button:hover {
@@ -334,7 +332,7 @@ ul {
 
 
 /* ============================================================
-   06. HEADER / NAVBAR
+   06. NAVBAR
 ============================================================ */
 
 .site-header {
@@ -475,12 +473,9 @@ ul {
 
 .mobile-menu-button span {
     display: block;
-
     width: 20px;
     height: 2px;
-
     margin: 4px auto;
-
     background: white;
 }
 
@@ -563,13 +558,11 @@ ul {
         );
 
     line-height: 0.98;
-
     letter-spacing: -0.065em;
 }
 
 .hero-title span {
     display: block;
-
     margin-top: 18px;
 
     background:
@@ -592,7 +585,6 @@ ul {
     width: fit-content;
 
     margin: 30px 0 22px;
-
     padding-right: 80px;
 
     color: #b9c9dc;
@@ -655,7 +647,6 @@ ul {
     content: "•";
 
     position: absolute;
-
     right: -12px;
 
     color: var(--primary-light);
@@ -674,8 +665,6 @@ ul {
 .hero-stats {
     display: flex;
     flex-wrap: wrap;
-
-    gap: 0;
 
     margin-top: 36px;
 }
@@ -714,7 +703,7 @@ ul {
 
 
 /* ============================================================
-   08. HERO VISUAL
+   08. PROFILE / HERO VISUAL
 ============================================================ */
 
 .hero-visual {
@@ -733,7 +722,9 @@ ul {
     display: grid;
     place-items: center;
 
-    perspective: 1000px;
+    perspective: 1100px;
+
+    overflow: visible;
 }
 
 .profile-orbit {
@@ -743,6 +734,8 @@ ul {
         1px solid rgba(69, 158, 255, 0.12);
 
     border-radius: 50%;
+
+    pointer-events: none;
 }
 
 .orbit-one {
@@ -780,23 +773,12 @@ ul {
     box-shadow:
         0 35px 70px rgba(0, 0, 0, 0.42);
 
+    transform-style: preserve-3d;
+
+    will-change: transform;
+
     transition:
-        transform 0.15s ease;
-}
-
-.profile-card-label {
-    position: absolute;
-
-    top: 14px;
-    left: 18px;
-
-    z-index: 2;
-
-    color:
-        rgba(255, 255, 255, 0.76);
-
-    font-size: 0.78rem;
-    font-weight: 700;
+        transform 0.2s ease;
 }
 
 .profile-image {
@@ -807,10 +789,15 @@ ul {
     object-position: center top;
 }
 
+
+/* ============================================================
+   09. FLOATING TOOL CARDS
+============================================================ */
+
 .floating-tool {
     position: absolute;
 
-    z-index: 5;
+    z-index: 6;
 
     min-width: 142px;
 
@@ -827,12 +814,17 @@ ul {
     border-radius: 13px;
 
     background:
-        rgba(7, 24, 43, 0.93);
+        rgba(7, 24, 43, 0.94);
 
     box-shadow:
         0 18px 40px rgba(0, 0, 0, 0.3);
 
     backdrop-filter: blur(12px);
+
+    animation:
+        toolFloat 4.5s ease-in-out infinite;
+
+    will-change: transform;
 }
 
 .floating-tool img {
@@ -856,6 +848,7 @@ ul {
 
 .floating-tool small {
     color: var(--text-muted);
+
     font-size: 0.61rem;
 }
 
@@ -871,17 +864,41 @@ ul {
 .tool-powerbi {
     top: 19%;
     right: -4%;
+
+    animation-delay: 0.5s;
 }
 
 .tool-python {
     bottom: 4%;
     left: 2%;
+
+    animation-delay: 1s;
 }
 
 .tool-excel {
     right: -4%;
     bottom: 8%;
+
+    animation-delay: 1.5s;
 }
+
+@keyframes toolFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+
+}
+
+
+/* ============================================================
+   10. HERO MINI PANELS
+============================================================ */
 
 .hero-mini-panels {
     display: grid;
@@ -965,9 +982,6 @@ ul {
             var(--cyan),
             var(--primary)
         );
-
-    box-shadow:
-        0 0 12px rgba(58, 213, 255, 0.16);
 }
 
 .workflow-bars span:nth-child(1) {
@@ -1071,7 +1085,7 @@ ul {
 
 
 /* ============================================================
-   09. ABOUT
+   11. ABOUT
 ============================================================ */
 
 .about-grid {
@@ -1140,7 +1154,7 @@ ul {
 
 
 /* ============================================================
-   10. SKILLS
+   12. SKILLS
 ============================================================ */
 
 .skills-grid {
@@ -1236,7 +1250,7 @@ ul {
 
 
 /* ============================================================
-   11. FEATURED PROJECT
+   13. FEATURED PROJECT
 ============================================================ */
 
 .featured-project {
@@ -1261,12 +1275,6 @@ ul {
 
     box-shadow: var(--shadow);
 }
-
-
-/* IMPORTANT:
-   Featured dashboard ko crop nahi karna.
-   Full dashboard visible rahega.
-*/
 
 .featured-image {
     position: relative;
@@ -1314,8 +1322,6 @@ ul {
 
     font-size: 0.7rem;
     font-weight: 800;
-
-    backdrop-filter: blur(10px);
 }
 
 .featured-content {
@@ -1467,11 +1473,6 @@ ul {
     font-size: 0.78rem;
 }
 
-
-/* Python / chart image:
-   poora chart visible hoga.
-*/
-
 .detail-image {
     width: 100%;
 
@@ -1486,7 +1487,7 @@ ul {
 
     border-radius: 14px;
 
-    background: #ffffff;
+    background: white;
 
     object-fit: contain;
     object-position: center;
@@ -1494,7 +1495,7 @@ ul {
 
 
 /* ============================================================
-   12. PROJECT CARDS
+   14. PROJECT CARDS
 ============================================================ */
 
 .projects-grid {
@@ -1524,8 +1525,7 @@ ul {
 }
 
 .project-card:hover {
-    transform:
-        translateY(-5px);
+    transform: translateY(-5px);
 
     border-color:
         var(--border-strong);
@@ -1533,19 +1533,6 @@ ul {
     box-shadow:
         0 22px 48px rgba(0, 0, 0, 0.22);
 }
-
-
-/* ============================================================
-   PROJECT IMAGE FIX
-
-   Pehle object-fit: cover tha.
-   Usse screenshots crop ho rahe the.
-
-   Ab:
-   - contain use ho raha hai
-   - poora chart/dashboard visible hoga
-   - card size same rahega
-============================================================ */
 
 .project-thumbnail {
     width: 100%;
@@ -1580,7 +1567,7 @@ ul {
 
     border-radius: 8px;
 
-    background: #ffffff;
+    background: white;
 
     transition:
         transform 0.35s ease;
@@ -1588,8 +1575,7 @@ ul {
 
 .project-card:hover
 .project-thumbnail img {
-    transform:
-        scale(1.015);
+    transform: scale(1.015);
 }
 
 .project-body {
@@ -1604,8 +1590,7 @@ ul {
 
     gap: 12px;
 
-    color:
-        var(--primary-light);
+    color: var(--primary-light);
 
     font-size: 0.66rem;
     font-weight: 800;
@@ -1651,7 +1636,7 @@ ul {
 
 
 /* ============================================================
-   13. EXPERIENCE
+   15. EXPERIENCE
 ============================================================ */
 
 .experience-grid {
@@ -1712,8 +1697,7 @@ ul {
 
     border-radius: 50%;
 
-    background:
-        var(--bg-main);
+    background: var(--bg-main);
 
     box-shadow:
         0 0 0 5px rgba(73, 184, 255, 0.08);
@@ -1808,7 +1792,7 @@ ul {
 
 
 /* ============================================================
-   14. EDUCATION
+   16. EDUCATION
 ============================================================ */
 
 .education-grid {
@@ -1822,7 +1806,6 @@ ul {
 
 .education-list {
     display: grid;
-
     gap: 14px;
 }
 
@@ -1868,10 +1851,7 @@ ul {
     height: 24px;
 
     fill: none;
-
-    stroke:
-        var(--primary-light);
-
+    stroke: var(--primary-light);
     stroke-width: 1.7;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -1906,7 +1886,6 @@ ul {
 
 .learning-card {
     height: fit-content;
-
     padding: 31px;
 }
 
@@ -1943,7 +1922,7 @@ ul {
 
 
 /* ============================================================
-   15. RESUME CTA
+   17. RESUME CTA
 ============================================================ */
 
 .resume-cta {
@@ -1992,7 +1971,7 @@ ul {
 
 
 /* ============================================================
-   16. CONTACT
+   18. CONTACT
 ============================================================ */
 
 .contact-grid {
@@ -2063,8 +2042,7 @@ ul {
 }
 
 .contact-card:hover {
-    transform:
-        translateY(-3px);
+    transform: translateY(-3px);
 
     border-color:
         var(--border-strong);
@@ -2095,7 +2073,7 @@ ul {
 
 
 /* ============================================================
-   17. FOOTER
+   19. FOOTER
 ============================================================ */
 
 .site-footer {
@@ -2136,7 +2114,6 @@ ul {
 
 .footer-links {
     display: flex;
-
     gap: 16px;
 }
 
@@ -2148,7 +2125,7 @@ ul {
 
 
 /* ============================================================
-   18. MODAL
+   20. MODAL
 ============================================================ */
 
 .modal {
@@ -2173,8 +2150,7 @@ ul {
     background:
         rgba(1, 7, 14, 0.82);
 
-    backdrop-filter:
-        blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .modal-dialog {
@@ -2230,9 +2206,6 @@ ul {
 
     cursor: pointer;
 }
-
-
-/* Modal screenshot also full visible */
 
 .modal-image-wrapper {
     aspect-ratio: 16 / 8;
@@ -2307,24 +2280,13 @@ ul {
     display: block;
 }
 
-.modal-metric strong {
-    font-size: 1.05rem;
-}
-
 .modal-metric span {
-    margin-top: 4px;
-
     color: var(--text-muted);
-
     font-size: 0.66rem;
 }
 
 .modal-section {
     margin-top: 28px;
-}
-
-.modal-section h3 {
-    margin-bottom: 13px;
 }
 
 .modal-section li {
@@ -2370,7 +2332,7 @@ ul {
 
 
 /* ============================================================
-   19. REVEAL ANIMATION
+   21. REVEAL
 ============================================================ */
 
 .reveal {
@@ -2386,13 +2348,12 @@ ul {
 
 .reveal.visible {
     opacity: 1;
-
     transform: none;
 }
 
 
 /* ============================================================
-   20. RESPONSIVE ≤ 1050PX
+   22. RESPONSIVE <= 1050PX
 ============================================================ */
 
 @media (max-width: 1050px) {
@@ -2402,10 +2363,6 @@ ul {
             1fr 0.85fr;
 
         gap: 40px;
-    }
-
-    .floating-tool {
-        min-width: 130px;
     }
 
     .featured-project {
@@ -2422,25 +2379,13 @@ ul {
 
 
 /* ============================================================
-   21. RESPONSIVE ≤ 950PX
+   23. RESPONSIVE <= 950PX
 ============================================================ */
 
 @media (max-width: 950px) {
 
-    .nav-menu {
-        gap: 18px;
-    }
-
-    .nav-link {
-        font-size: 0.8rem;
-    }
-
     .hero-grid {
         grid-template-columns: 1fr;
-    }
-
-    .hero-content {
-        text-align: left;
     }
 
     .hero-visual {
@@ -2466,7 +2411,7 @@ ul {
 
 
 /* ============================================================
-   22. RESPONSIVE ≤ 900PX
+   24. TABLET NAV
 ============================================================ */
 
 @media (max-width: 900px) {
@@ -2497,7 +2442,6 @@ ul {
         display: none;
 
         flex-direction: column;
-
         align-items: stretch;
 
         gap: 0;
@@ -2512,8 +2456,7 @@ ul {
         background:
             rgba(4, 16, 31, 0.97);
 
-        box-shadow:
-            var(--shadow);
+        box-shadow: var(--shadow);
     }
 
     .nav-menu.open {
@@ -2548,7 +2491,7 @@ ul {
 
 
 /* ============================================================
-   23. RESPONSIVE ≤ 700PX
+   25. MOBILE HERO FIX
 ============================================================ */
 
 @media (max-width: 700px) {
@@ -2570,16 +2513,17 @@ ul {
     }
 
     .hero {
-        padding-top: 55px;
-
         min-height: auto;
+
+        padding-top: 55px;
+        padding-bottom: 70px;
     }
 
     .hero-title {
         font-size:
             clamp(
-                3.5rem,
-                16vw,
+                3.4rem,
+                15vw,
                 5rem
             );
     }
@@ -2596,16 +2540,128 @@ ul {
         padding: 0 15px;
     }
 
-    .profile-stage {
-        transform:
-            scale(0.9);
 
-        transform-origin:
-            center;
+    /* --------------------------------------------------------
+       IMPORTANT MOBILE PROFILE FIX
+
+       Top tools are now ABOVE image.
+       Bottom tools are BELOW image.
+       Face is not covered.
+    --------------------------------------------------------- */
+
+    .profile-stage {
+        width: 100%;
+        max-width: 390px;
+
+        min-height: 610px;
+
+        aspect-ratio: auto;
+
+        margin: 0 auto;
+
+        padding:
+            88px 10px 88px;
+
+        display: grid;
+        place-items: center;
+
+        overflow: visible;
     }
+
+    .profile-card {
+        width: min(100%, 310px);
+
+        height: auto;
+
+        aspect-ratio: 310 / 390;
+
+        margin: 0 auto;
+    }
+
+    .profile-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        object-position:
+            center top;
+    }
+
+    .orbit-one {
+        width: 355px;
+        height: 355px;
+    }
+
+    .orbit-two {
+        width: 285px;
+        height: 285px;
+    }
+
+
+    /* MOBILE TOOL CARDS */
+
+    .floating-tool {
+        min-width: 142px;
+
+        padding:
+            10px 12px;
+
+        gap: 9px;
+    }
+
+    .floating-tool img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .floating-tool small {
+        font-size: 0.6rem;
+    }
+
+    .floating-tool strong {
+        font-size: 0.77rem;
+    }
+
+
+    /* TOP LEFT */
+
+    .tool-postgresql {
+        top: 18px;
+        left: 12px;
+    }
+
+
+    /* TOP RIGHT */
+
+    .tool-powerbi {
+        top: 18px;
+        right: 12px;
+    }
+
+
+    /* BOTTOM LEFT */
+
+    .tool-python {
+        bottom: 18px;
+        left: 12px;
+    }
+
+
+    /* BOTTOM RIGHT */
+
+    .tool-excel {
+        right: 12px;
+        bottom: 18px;
+    }
+
 
     .hero-mini-panels {
         grid-template-columns: 1fr;
+
+        max-width: 100%;
+
+        margin-top: 20px;
     }
 
     .featured-details {
@@ -2642,7 +2698,7 @@ ul {
 
 
 /* ============================================================
-   24. RESPONSIVE ≤ 650PX
+   26. SMALL MOBILE
 ============================================================ */
 
 @media (max-width: 650px) {
@@ -2690,32 +2746,54 @@ ul {
 
 
 /* ============================================================
-   25. RESPONSIVE ≤ 600PX
+   27. VERY SMALL MOBILE
 ============================================================ */
 
-@media (max-width: 600px) {
+@media (max-width: 430px) {
 
     .profile-stage {
-        width: 100%;
+        max-width: 360px;
 
-        transform:
-            scale(0.78);
+        min-height: 570px;
 
-        margin:
-            -40px auto;
+        padding:
+            80px 6px;
+    }
+
+    .profile-card {
+        width: 285px;
     }
 
     .floating-tool {
-        min-width: 125px;
-    }
+        min-width: 130px;
 
-    .resume-cta {
         padding:
-            30px 24px;
+            9px 10px;
     }
 
-    .education-card {
-        flex-direction: column;
+    .floating-tool img {
+        width: 27px;
+        height: 27px;
+    }
+
+    .tool-postgresql {
+        top: 15px;
+        left: 5px;
+    }
+
+    .tool-powerbi {
+        top: 15px;
+        right: 5px;
+    }
+
+    .tool-python {
+        bottom: 15px;
+        left: 5px;
+    }
+
+    .tool-excel {
+        bottom: 15px;
+        right: 5px;
     }
 
     .project-thumbnail {
@@ -2726,11 +2804,47 @@ ul {
         padding: 8px;
     }
 
+    .education-card {
+        flex-direction: column;
+    }
+
 }
 
 
 /* ============================================================
-   26. REDUCED MOTION
+   28. ULTRA SMALL MOBILE
+============================================================ */
+
+@media (max-width: 370px) {
+
+    .profile-card {
+        width: 260px;
+    }
+
+    .profile-stage {
+        min-height: 535px;
+    }
+
+    .floating-tool {
+        min-width: 122px;
+
+        padding:
+            8px 8px;
+    }
+
+    .floating-tool strong {
+        font-size: 0.7rem;
+    }
+
+    .floating-tool small {
+        font-size: 0.54rem;
+    }
+
+}
+
+
+/* ============================================================
+   29. REDUCED MOTION
 ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -2753,8 +2867,11 @@ ul {
 
     .reveal {
         opacity: 1;
-
         transform: none;
+    }
+
+    .floating-tool {
+        animation: none;
     }
 
 }
