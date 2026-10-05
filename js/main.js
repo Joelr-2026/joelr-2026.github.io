@@ -1,1428 +1,1280 @@
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+/* ============================================================
+   01. GLOBAL SETTINGS
+============================================================ */
 
-
-    /* ========================================================
-       01 / SETTINGS
-    ======================================================== */
-
-    const reducedMotion =
-      window.matchMedia(
+const prefersReducedMotion =
+    window.matchMedia(
         "(prefers-reduced-motion: reduce)"
-      ).matches;
+    ).matches;
 
 
 
-    /* ========================================================
-       02 / REVEAL ANIMATION
-    ======================================================== */
+/* ============================================================
+   02. REVEAL ON SCROLL
+============================================================ */
 
-    const revealElements =
-      document.querySelectorAll(
-        ".reveal"
-      );
+const revealElements =
+    document.querySelectorAll(".reveal");
 
 
-    if (
-      !reducedMotion &&
-      "IntersectionObserver" in window
-    ) {
+if (prefersReducedMotion) {
 
-      const revealObserver =
+    revealElements.forEach((element) => {
+        element.classList.add("visible");
+    });
+
+} else {
+
+    const revealObserver =
         new IntersectionObserver(
-          (entries) => {
+            (entries, observer) => {
 
-            entries.forEach(
-              (entry) => {
+                entries.forEach((entry) => {
 
-                if (
-                  entry.isIntersecting
-                ) {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
 
-                  entry.target
-                    .classList
-                    .add(
-                      "visible"
-                    );
+                    entry.target.classList.add("visible");
 
+                    observer.unobserve(entry.target);
 
-                  revealObserver
-                    .unobserve(
-                      entry.target
-                    );
+                });
 
-                }
-
-              }
-            );
-
-          },
-          {
-            threshold: 0.1
-          }
+            },
+            {
+                threshold: 0.12
+            }
         );
 
 
-      revealElements
-        .forEach(
-          (element) => {
+    revealElements.forEach((element) => {
+        revealObserver.observe(element);
+    });
 
-            revealObserver
-              .observe(
-                element
-              );
-
-          }
-        );
-
-    }
-
-    else {
-
-      revealElements
-        .forEach(
-          (element) => {
-
-            element
-              .classList
-              .add(
-                "visible"
-              );
-
-          }
-        );
-
-    }
+}
 
 
 
-    /* ========================================================
-       03 / HERO COUNTERS
-    ======================================================== */
+/* ============================================================
+   03. HERO COUNTERS
+============================================================ */
 
-    const counters =
-      document.querySelectorAll(
-        ".counter"
-      );
+const counters =
+    document.querySelectorAll(".counter");
 
 
-    const animateCounter =
-      (counter) => {
+function animateCounter(counter) {
+
+    const target =
+        Number(counter.dataset.target);
+
+    const duration =
+        900;
+
+    const startTime =
+        performance.now();
 
 
-        const target =
-          Number(
-            counter.dataset.target
-          );
+    function updateCounter(currentTime) {
 
+        const elapsed =
+            currentTime - startTime;
 
-        if (
-          !Number.isFinite(
-            target
-          )
-        ) {
-
-          return;
-
-        }
-
-
-        if (
-          reducedMotion
-        ) {
-
-          counter.textContent =
-            target;
-
-          return;
-
-        }
-
-
-        const duration =
-          900;
-
-
-        const startTime =
-          performance.now();
-
-
-
-        const update =
-          (currentTime) => {
-
-
-            const progress =
-              Math.min(
-                (
-                  currentTime -
-                  startTime
-                ) /
-                duration,
+        const progress =
+            Math.min(
+                elapsed / duration,
                 1
-              );
-
-
-            const eased =
-              1 -
-              Math.pow(
-                1 - progress,
-                3
-              );
-
-
-            counter.textContent =
-              Math.floor(
-                eased *
-                target
-              );
-
-
-            if (
-              progress < 1
-            ) {
-
-              requestAnimationFrame(
-                update
-              );
-
-            }
-
-            else {
-
-              counter.textContent =
-                target;
-
-            }
-
-          };
-
-
-        requestAnimationFrame(
-          update
-        );
-
-      };
-
-
-
-    if (
-      "IntersectionObserver" in window
-    ) {
-
-      const counterObserver =
-        new IntersectionObserver(
-          (entries) => {
-
-            entries.forEach(
-              (entry) => {
-
-                if (
-                  entry.isIntersecting
-                ) {
-
-                  animateCounter(
-                    entry.target
-                  );
-
-
-                  counterObserver
-                    .unobserve(
-                      entry.target
-                    );
-
-                }
-
-              }
             );
 
-          },
-          {
-            threshold: 0.6
-          }
-        );
+        const value =
+            Math.round(
+                target * progress
+            );
+
+        counter.textContent =
+            value;
 
 
-      counters
-        .forEach(
-          (counter) => {
-
-            counterObserver
-              .observe(
-                counter
-              );
-
-          }
-        );
-
-    }
-
-    else {
-
-      counters
-        .forEach(
-          animateCounter
-        );
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        }
 
     }
 
 
+    requestAnimationFrame(updateCounter);
 
-    /* ========================================================
-       04 / ACTIVE NAVBAR
-    ======================================================== */
-
-    const sections =
-      document.querySelectorAll(
-        "main section[id]"
-      );
+}
 
 
-    const navLinks =
-      document.querySelectorAll(
-        ".nav-link"
-      );
+if (prefersReducedMotion) {
 
+    counters.forEach((counter) => {
+        counter.textContent =
+            counter.dataset.target;
+    });
 
+} else {
 
-    const updateActiveNav =
-      () => {
+    const counterObserver =
+        new IntersectionObserver(
+            (entries, observer) => {
 
+                entries.forEach((entry) => {
 
-        let currentSection =
-          "home";
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
 
+                    animateCounter(entry.target);
 
-        sections
-          .forEach(
-            (section) => {
+                    observer.unobserve(entry.target);
 
+                });
 
-              const sectionTop =
-                section.offsetTop -
-                180;
-
-
-              if (
-                window.scrollY >=
-                sectionTop
-              ) {
-
-                currentSection =
-                  section.id;
-
-              }
-
+            },
+            {
+                threshold: 0.6
             }
-          );
+        );
 
 
-        navLinks
-          .forEach(
-            (link) => {
+    counters.forEach((counter) => {
+        counterObserver.observe(counter);
+    });
+
+}
 
 
-              link.classList
-                .remove(
-                  "active"
-                );
 
+/* ============================================================
+   04. MOBILE NAVIGATION
+============================================================ */
 
-              if (
-                link.getAttribute(
-                  "href"
-                ) ===
-                `#${currentSection}`
-              ) {
-
-                link.classList
-                  .add(
-                    "active"
-                  );
-
-              }
-
-            }
-          );
-
-      };
-
-
-    window.addEventListener(
-      "scroll",
-      updateActiveNav,
-      {
-        passive: true
-      }
+const mobileMenuButton =
+    document.getElementById(
+        "mobileMenuButton"
     );
 
 
-    updateActiveNav();
+const primaryNav =
+    document.getElementById(
+        "primaryNav"
+    );
+
+
+if (
+    mobileMenuButton &&
+    primaryNav
+) {
+
+    mobileMenuButton.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                primaryNav.classList.toggle(
+                    "open"
+                );
+
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        }
+    );
+
+
+    primaryNav
+        .querySelectorAll("a")
+        .forEach((link) => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    primaryNav
+                        .classList
+                        .remove("open");
+
+
+                    mobileMenuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+            );
+
+        });
+
+}
 
 
 
-    /* ========================================================
-       05 / SMOOTH INTERNAL LINKS
-    ======================================================== */
+/* ============================================================
+   05. SMOOTH INTERNAL LINKS
+============================================================ */
 
-    const internalLinks =
-      document.querySelectorAll(
+document
+    .querySelectorAll(
         'a[href^="#"]'
-      );
+    )
+    .forEach((link) => {
 
-
-    internalLinks
-      .forEach(
-        (link) => {
-
-
-          link.addEventListener(
+        link.addEventListener(
             "click",
             (event) => {
 
-
-              const targetId =
-                link.getAttribute(
-                  "href"
-                );
-
-
-              if (
-                !targetId ||
-                targetId === "#"
-              ) {
-
-                return;
-
-              }
+                const href =
+                    link.getAttribute(
+                        "href"
+                    );
 
 
-              const target =
-                document.querySelector(
-                  targetId
-                );
+                if (
+                    !href ||
+                    href === "#"
+                ) {
+                    return;
+                }
 
 
-              if (
-                !target
-              ) {
-
-                return;
-
-              }
+                const target =
+                    document.querySelector(
+                        href
+                    );
 
 
-              event.preventDefault();
+                if (!target) {
+                    return;
+                }
 
 
-              target
-                .scrollIntoView(
-                  {
+                event.preventDefault();
 
+
+                target.scrollIntoView({
                     behavior:
-                      reducedMotion
-                        ? "auto"
-                        : "smooth",
-
+                        prefersReducedMotion
+                            ? "auto"
+                            : "smooth",
                     block:
-                      "start"
-
-                  }
-                );
+                        "start"
+                });
 
             }
-          );
+        );
 
+    });
+
+
+
+/* ============================================================
+   06. ACTIVE NAVBAR SECTION
+============================================================ */
+
+const navLinks =
+    Array.from(
+        document.querySelectorAll(
+            ".nav-link"
+        )
+    );
+
+
+const trackedSections =
+    Array.from(
+        document.querySelectorAll(
+            "main section[id]"
+        )
+    );
+
+
+const sectionObserver =
+    new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach(
+                (entry) => {
+
+                    if (
+                        !entry.isIntersecting
+                    ) {
+                        return;
+                    }
+
+
+                    const sectionId =
+                        entry.target.id;
+
+
+                    navLinks.forEach(
+                        (link) => {
+
+                            const isCurrent =
+                                link.getAttribute(
+                                    "href"
+                                ) ===
+                                `#${sectionId}`;
+
+
+                            link.classList.toggle(
+                                "active",
+                                isCurrent
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        },
+        {
+            rootMargin:
+                "-40% 0px -52% 0px",
+            threshold:
+                0
         }
-      );
+    );
+
+
+trackedSections.forEach(
+    (section) => {
+        sectionObserver.observe(
+            section
+        );
+    }
+);
 
 
 
-    /* ========================================================
-       06 / PROFILE 3D EFFECT
-    ======================================================== */
+/* ============================================================
+   07. HERO PROFILE 3D EFFECT
+============================================================ */
 
-    const profileStage =
-      document.getElementById(
+const profileStage =
+    document.getElementById(
         "profileStage"
-      );
+    );
 
 
-    const profileShell =
-      document.querySelector(
-        ".profile-shell"
-      );
+const profileCard =
+    profileStage
+        ?.querySelector(
+            ".profile-card"
+        );
 
 
-    if (
-      profileStage &&
-      profileShell &&
-      !reducedMotion
-    ) {
+if (
+    profileStage &&
+    profileCard &&
+    !prefersReducedMotion
+) {
 
-
-      profileStage
-        .addEventListener(
-          "mousemove",
-          (event) => {
-
+    profileStage.addEventListener(
+        "mousemove",
+        (event) => {
 
             const rect =
-              profileStage
-                .getBoundingClientRect();
+                profileStage
+                    .getBoundingClientRect();
 
 
-            const mouseX =
-              (
+            const x =
                 event.clientX -
-                rect.left
-              ) /
-              rect.width;
+                rect.left;
 
 
-            const mouseY =
-              (
+            const y =
                 event.clientY -
-                rect.top
-              ) /
-              rect.height;
+                rect.top;
 
 
             const rotateY =
-              (
-                mouseX -
-                0.5
-              ) *
-              4;
+                (
+                    x /
+                    rect.width -
+                    0.5
+                ) * 7;
 
 
             const rotateX =
-              (
-                0.5 -
-                mouseY
-              ) *
-              4;
+                (
+                    0.5 -
+                    y /
+                    rect.height
+                ) * 7;
 
 
-            profileShell
-              .style
-              .transform =
-              `
-                translate(-50%, -50%)
-                perspective(1000px)
+            profileCard.style.transform =
+                `
                 rotateX(${rotateX}deg)
                 rotateY(${rotateY}deg)
-              `;
+                translateZ(6px)
+                `;
 
-          }
-        );
-
-
-      profileStage
-        .addEventListener(
-          "mouseleave",
-          () => {
+        }
+    );
 
 
-            profileShell
-              .style
-              .transform =
-              `
-                translate(-50%, -50%)
-                perspective(1000px)
-                rotateX(0deg)
-                rotateY(0deg)
-              `;
+    profileStage.addEventListener(
+        "mouseleave",
+        () => {
 
-          }
-        );
+            profileCard.style.transform =
+                "rotateX(0deg) rotateY(0deg)";
 
-    }
+        }
+    );
+
+}
 
 
 
-    /* ========================================================
-       07 / MOBILE NAVIGATION
-    ======================================================== */
+/* ============================================================
+   08. COPY EMAIL
+============================================================ */
 
-    const mobileMenuBtn =
-      document.getElementById(
-        "mobileMenuBtn"
-      );
-
-
-    const navLinksContainer =
-      document.getElementById(
-        "navLinks"
-      );
+const copyEmailButton =
+    document.getElementById(
+        "copyEmailButton"
+    );
 
 
-    if (
-      mobileMenuBtn &&
-      navLinksContainer
-    ) {
+const copyStatus =
+    document.getElementById(
+        "copyStatus"
+    );
 
 
-      mobileMenuBtn
-        .addEventListener(
-          "click",
-          () => {
+if (
+    copyEmailButton &&
+    copyStatus
+) {
 
-
-            const isOpen =
-              navLinksContainer
-                .classList
-                .toggle(
-                  "open"
-                );
-
-
-            mobileMenuBtn
-              .setAttribute(
-                "aria-expanded",
-                String(
-                  isOpen
-                )
-              );
-
-          }
-        );
-
-
-      navLinks
-        .forEach(
-          (link) => {
-
-
-            link.addEventListener(
-              "click",
-              () => {
-
-
-                navLinksContainer
-                  .classList
-                  .remove(
-                    "open"
-                  );
-
-
-                mobileMenuBtn
-                  .setAttribute(
-                    "aria-expanded",
-                    "false"
-                  );
-
-              }
-            );
-
-          }
-        );
-
-    }
-
-
-
-    /* ========================================================
-       08 / COPY EMAIL
-    ======================================================== */
-
-    const copyEmailBtn =
-      document.getElementById(
-        "copyEmailBtn"
-      );
-
-
-    const copyFeedback =
-      document.getElementById(
-        "copyFeedback"
-      );
-
-
-    if (
-      copyEmailBtn
-    ) {
-
-
-      copyEmailBtn
-        .addEventListener(
-          "click",
-          async () => {
-
+    copyEmailButton.addEventListener(
+        "click",
+        async () => {
 
             const email =
-              copyEmailBtn
-                .dataset
-                .email;
+                copyEmailButton.dataset.email;
 
 
             try {
 
-
-              await navigator
-                .clipboard
-                .writeText(
-                  email
-                );
+                await navigator.clipboard
+                    .writeText(email);
 
 
-              if (
-                copyFeedback
-              ) {
+                copyStatus.textContent =
+                    "Email copied to clipboard.";
 
-                copyFeedback
-                  .textContent =
-                  "Email copied to clipboard.";
+            } catch (error) {
 
-              }
-
+                copyStatus.textContent =
+                    email;
 
             }
 
-            catch (
-              error
-            ) {
 
+            window.setTimeout(
+                () => {
 
-              if (
-                copyFeedback
-              ) {
+                    copyStatus.textContent =
+                        "";
 
-                copyFeedback
-                  .textContent =
-                  email;
-
-              }
-
-
-            }
-
-          }
-        );
-
-    }
-
-
-
-    /* ========================================================
-       09 / PROJECT CASE STUDY DATA
-    ======================================================== */
-
-    const projectData = {
-
-
-      flagship: {
-
-        title:
-          "Flagship End-to-End Analytics",
-
-        summary:
-          "A complete business analytics workflow using PostgreSQL, SQL, Python, Pandas and Power BI.",
-
-        goal:
-          "Analyze overall sales, revenue, profit, product performance, customer behavior, cities and sales channels, then convert the findings into business insights and recommendations.",
-
-        tools: [
-          "PostgreSQL",
-          "SQL",
-          "Python",
-          "Pandas",
-          "Power BI"
-        ],
-
-        work: [
-          "Loaded structured customer, product and order datasets into PostgreSQL.",
-          "Performed data validation before business analysis.",
-          "Used SQL for sales, profitability, product, customer and channel analysis.",
-          "Performed exploratory analysis in Python and Pandas.",
-          "Created analytical charts and a Power BI dashboard.",
-          "Converted analysis into business insights and recommendations."
-        ],
-
-        metrics: [
-          [
-            "Customers",
-            "800"
-          ],
-          [
-            "Products",
-            "150"
-          ],
-          [
-            "Orders",
-            "3,005"
-          ]
-        ],
-
-        image:
-          "assets/projects/flagship/Images/Flagship_Analytics_Dashboard.png"
-
-      },
-
-
-
-      inventory: {
-
-        title:
-          "Inventory Optimization & Demand Planning",
-
-        summary:
-          "Large-scale SQL and Power BI project focused on demand patterns, validation and planning.",
-
-        goal:
-          "Understand demand behavior over time and support inventory planning using historical demand data.",
-
-        tools: [
-          "PostgreSQL",
-          "SQL",
-          "Power BI",
-          "DAX"
-        ],
-
-        work: [
-          "Loaded and validated a large historical demand dataset.",
-          "Investigated negative-demand records and missing dates.",
-          "Analyzed demand trends across products and other business dimensions.",
-          "Created SQL business analysis queries.",
-          "Built a Power BI dashboard for demand and planning insights."
-        ],
-
-        metrics: [
-          [
-            "Demand Records",
-            "1,048,575"
-          ],
-          [
-            "Negative Demand",
-            "10,469"
-          ],
-          [
-            "Missing Dates",
-            "11,239"
-          ]
-        ],
-
-        image:
-          "assets/projects/inventory/Images/inventory_dashboard.png"
-
-      },
-
-
-
-      churn: {
-
-        title:
-          "Customer Churn Analysis",
-
-        summary:
-          "Python-based exploratory analysis of customer churn using 1,500 customer records.",
-
-        goal:
-          "Identify customer groups and behaviors associated with higher churn and present the findings visually.",
-
-        tools: [
-          "Python",
-          "Pandas",
-          "NumPy",
-          "Matplotlib",
-          "Seaborn"
-        ],
-
-        work: [
-          "Inspected dataset structure, data types and missing values.",
-          "Cleaned inconsistent category values.",
-          "Handled missing city values.",
-          "Analyzed churn across contract type, plan, city and signup channel.",
-          "Compared behavioral and numeric variables by churn status.",
-          "Created charts and documented business insights."
-        ],
-
-        metrics: [
-          [
-            "Customers",
-            "1,500"
-          ],
-          [
-            "Churned",
-            "396"
-          ],
-          [
-            "Churn Rate",
-            "26.4%"
-          ]
-        ],
-
-        image:
-          "assets/projects/churn/Images/churn_by_contract.png"
-
-      },
-
-
-
-      ecommerce: {
-
-        title:
-          "E-commerce SQL Analysis",
-
-        summary:
-          "SQL-focused analytics project demonstrating business analysis from basic querying through advanced SQL.",
-
-        goal:
-          "Answer revenue, customer, product, category and trend questions using structured SQL analysis.",
-
-        tools: [
-          "PostgreSQL",
-          "SQL",
-          "CTEs",
-          "Window Functions"
-        ],
-
-        work: [
-          "Created and validated the analysis table.",
-          "Used filtering, grouping and aggregations for business questions.",
-          "Applied CASE expressions and joins.",
-          "Used subqueries and CTEs.",
-          "Applied window functions for ranking and advanced analysis.",
-          "Analyzed time-based sales performance."
-        ],
-
-        metrics: [
-          [
-            "Records",
-            "2,505"
-          ],
-          [
-            "Focus",
-            "Business SQL"
-          ],
-          [
-            "Level",
-            "Advanced Queries"
-          ]
-        ],
-
-        image:
-          "assets/projects/ecommerce-sql/Images/monthly_sales_trend.png"
-
-      },
-
-
-
-      "food-delivery": {
-
-        title:
-          "Food Delivery Performance Dashboard",
-
-        summary:
-          "Power BI project focused on cleaning, modeling, KPIs and interactive dashboard analysis.",
-
-        goal:
-          "Turn food-delivery records into a clear performance dashboard with useful KPIs and interactive filtering.",
-
-        tools: [
-          "Power BI",
-          "Power Query",
-          "DAX"
-        ],
-
-        work: [
-          "Imported the source dataset into Power BI.",
-          "Cleaned and transformed data using Power Query.",
-          "Created required calculated measures using DAX.",
-          "Built KPI cards and analytical visuals.",
-          "Added slicers for interactive exploration.",
-          "Created a polished dashboard layout."
-        ],
-
-        metrics: [
-          [
-            "Records",
-            "2,000"
-          ],
-          [
-            "Platform",
-            "Power BI"
-          ],
-          [
-            "Output",
-            "Dashboard"
-          ]
-        ],
-
-        image:
-          "assets/projects/food-delivery/Images/food_delivery_dashboard.png"
-
-      },
-
-
-
-      retail: {
-
-        title:
-          "Retail Sales Analysis",
-
-        summary:
-          "Excel-based retail analytics project covering cleaning, formulas, PivotTables, PivotCharts and dashboarding.",
-
-        goal:
-          "Analyze retail sales performance in Excel and present the results through an interactive dashboard.",
-
-        tools: [
-          "Excel",
-          "Power Query",
-          "PivotTables",
-          "PivotCharts"
-        ],
-
-        work: [
-          "Cleaned and prepared the retail dataset.",
-          "Used formulas where required for analysis.",
-          "Created KPI summaries.",
-          "Built PivotTables for business analysis.",
-          "Created PivotCharts and slicers.",
-          "Designed the final Excel dashboard."
-        ],
-
-        metrics: [
-          [
-            "Records",
-            "1,205"
-          ],
-          [
-            "Platform",
-            "Excel"
-          ],
-          [
-            "Output",
-            "Interactive Dashboard"
-          ]
-        ],
-
-        image:
-          "assets/projects/retail-sales/Images/retail_sales_dashboard.png"
-
-      }
-
-
-    };
-
-
-
-    /* ========================================================
-       10 / PROJECT MODAL ELEMENTS
-    ======================================================== */
-
-    const modal =
-      document.getElementById(
-        "caseStudyModal"
-      );
-
-
-    const modalCloseBtn =
-      document.getElementById(
-        "modalCloseBtn"
-      );
-
-
-    const modalSecondaryClose =
-      document.getElementById(
-        "modalSecondaryClose"
-      );
-
-
-    const modalImage =
-      document.getElementById(
-        "modalProjectImage"
-      );
-
-
-    const modalTitle =
-      document.getElementById(
-        "modalProjectTitle"
-      );
-
-
-    const modalSummary =
-      document.getElementById(
-        "modalProjectSummary"
-      );
-
-
-    const modalGoal =
-      document.getElementById(
-        "modalProjectGoal"
-      );
-
-
-    const modalTools =
-      document.getElementById(
-        "modalProjectTools"
-      );
-
-
-    const modalWork =
-      document.getElementById(
-        "modalProjectWork"
-      );
-
-
-    const modalMetrics =
-      document.getElementById(
-        "modalProjectMetrics"
-      );
-
-
-    const caseStudyButtons =
-      document.querySelectorAll(
-        ".case-study-btn"
-      );
-
-
-
-    /* ========================================================
-       11 / OPEN PROJECT MODAL
-    ======================================================== */
-
-    const openModal =
-      (projectKey) => {
-
-
-        const project =
-          projectData[
-            projectKey
-          ];
-
-
-        if (
-          !project ||
-          !modal
-        ) {
-
-          return;
-
-        }
-
-
-        modalTitle.textContent =
-          project.title;
-
-
-        modalSummary.textContent =
-          project.summary;
-
-
-        modalGoal.textContent =
-          project.goal;
-
-
-        modalImage.src =
-          project.image;
-
-
-        modalImage.alt =
-          `${project.title} preview`;
-
-
-
-        /* TOOLS */
-
-        modalTools.innerHTML =
-          "";
-
-
-        project.tools
-          .forEach(
-            (tool) => {
-
-
-              const span =
-                document
-                  .createElement(
-                    "span"
-                  );
-
-
-              span.textContent =
-                tool;
-
-
-              modalTools
-                .appendChild(
-                  span
-                );
-
-            }
-          );
-
-
-
-        /* WORK */
-
-        modalWork.innerHTML =
-          "";
-
-
-        project.work
-          .forEach(
-            (item) => {
-
-
-              const li =
-                document
-                  .createElement(
-                    "li"
-                  );
-
-
-              li.textContent =
-                item;
-
-
-              modalWork
-                .appendChild(
-                  li
-                );
-
-            }
-          );
-
-
-
-        /* METRICS */
-
-        modalMetrics.innerHTML =
-          "";
-
-
-        project.metrics
-          .forEach(
-            ([label, value]) => {
-
-
-              const metric =
-                document
-                  .createElement(
-                    "div"
-                  );
-
-
-              metric.className =
-                "modal-metric";
-
-
-              metric.innerHTML =
-                `
-                  <span>${label}</span>
-                  <strong>${value}</strong>
-                `;
-
-
-              modalMetrics
-                .appendChild(
-                  metric
-                );
-
-            }
-          );
-
-
-
-        modal.classList
-          .add(
-            "open"
-          );
-
-
-        modal.setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-
-        document.body
-          .classList
-          .add(
-            "modal-open"
-          );
-
-
-        if (
-          modalCloseBtn
-        ) {
-
-          modalCloseBtn
-            .focus();
-
-        }
-
-      };
-
-
-
-    /* ========================================================
-       12 / CLOSE PROJECT MODAL
-    ======================================================== */
-
-    const closeModal =
-      () => {
-
-
-        if (
-          !modal
-        ) {
-
-          return;
-
-        }
-
-
-        modal.classList
-          .remove(
-            "open"
-          );
-
-
-        modal.setAttribute(
-          "aria-hidden",
-          "true"
-        );
-
-
-        document.body
-          .classList
-          .remove(
-            "modal-open"
-          );
-
-      };
-
-
-
-    caseStudyButtons
-      .forEach(
-        (button) => {
-
-
-          button
-            .addEventListener(
-              "click",
-              () => {
-
-
-                openModal(
-                  button
-                    .dataset
-                    .project
-                );
-
-              }
+                },
+                2500
             );
 
         }
-      );
+    );
+
+}
 
 
 
-    if (
-      modalCloseBtn
-    ) {
+/* ============================================================
+   09. PROJECT CASE STUDY DATA
+============================================================ */
 
-      modalCloseBtn
-        .addEventListener(
-          "click",
-          closeModal
-        );
+const projectData = {
 
-    }
+    /* --------------------------------------------------------
+       FLAGSHIP
+    --------------------------------------------------------- */
+    flagship: {
 
+        category:
+            "END-TO-END ANALYTICS",
 
+        title:
+            "Flagship End-to-End Analytics",
 
-    if (
-      modalSecondaryClose
-    ) {
+        description:
+            "A complete portfolio project connecting raw CSV data, PostgreSQL validation and business analysis, Python/Pandas exploratory analysis, Power BI dashboarding and business recommendations.",
 
-      modalSecondaryClose
-        .addEventListener(
-          "click",
-          closeModal
-        );
+        image:
+            "assets/projects/flagship/Images/Flagship_Analytics_Dashboard.png",
 
-    }
+        repo:
+            "https://github.com/Joelr-2026/Flagship_End_to_End_Analytics",
 
-
-
-    if (
-      modal
-    ) {
-
-
-      modal
-        .addEventListener(
-          "click",
-          (event) => {
-
-
-            if (
-              event.target ===
-              modal
-            ) {
-
-              closeModal();
-
+        metrics: [
+            {
+                value: "800",
+                label: "Customers"
+            },
+            {
+                value: "150",
+                label: "Products"
+            },
+            {
+                value: "3,005",
+                label: "Orders"
             }
+        ],
 
-          }
-        );
+        workflow: [
+            "Raw CSV",
+            "PostgreSQL",
+            "Data Validation",
+            "SQL Analysis",
+            "Python EDA",
+            "Power BI",
+            "Business Insights"
+        ],
+
+        highlights: [
+            "Structured relational tables and validated source data before analysis.",
+            "Used SQL to analyze sales, customers, products, categories and profitability.",
+            "Used Python and Pandas for exploratory analysis and supporting visualizations.",
+            "Built a Power BI dashboard for revenue, profit, customer and product performance.",
+            "Converted analysis results into business-focused findings and recommendations."
+        ],
+
+        stack: [
+            "PostgreSQL",
+            "SQL",
+            "Python",
+            "Pandas",
+            "Power BI"
+        ]
+
+    },
+
+
+    /* --------------------------------------------------------
+       INVENTORY
+    --------------------------------------------------------- */
+    inventory: {
+
+        category:
+            "SQL + POWER BI",
+
+        title:
+            "Inventory Optimization & Demand Planning",
+
+        description:
+            "A demand-planning portfolio project focused on data validation, demand behavior, data-quality investigation and Power BI reporting using a dataset containing more than one million demand records.",
+
+        image:
+            "assets/projects/inventory/Images/inventory_dashboard.png",
+
+        repo:
+            "https://github.com/Joelr-2026/Inventory_Optimization---Demand_Planning_project",
+
+        metrics: [
+            {
+                value: "1,048,575",
+                label: "Demand Records"
+            },
+            {
+                value: "10,469",
+                label: "Negative Demand"
+            },
+            {
+                value: "11,239",
+                label: "Missing Dates"
+            }
+        ],
+
+        workflow: [
+            "Demand Data",
+            "PostgreSQL",
+            "Validation",
+            "Business Analysis",
+            "Power BI",
+            "Dashboard"
+        ],
+
+        highlights: [
+            "Loaded and inspected large-volume inventory demand data.",
+            "Investigated missing dates, negative demand values and duplicate-looking records.",
+            "Used SQL for validation and structured business analysis.",
+            "Created dashboard KPIs, trends and product-level demand views.",
+            "Focused on practical demand-planning and inventory reporting questions."
+        ],
+
+        stack: [
+            "PostgreSQL",
+            "SQL",
+            "Power BI",
+            "DAX"
+        ]
+
+    },
+
+
+    /* --------------------------------------------------------
+       CUSTOMER CHURN
+    --------------------------------------------------------- */
+    churn: {
+
+        category:
+            "PYTHON DATA ANALYSIS",
+
+        title:
+            "Customer Churn Analysis",
+
+        description:
+            "A Python-based customer churn portfolio project covering data inspection, cleaning, categorical churn analysis, numerical comparison, visualization and business interpretation.",
+
+        image:
+            "assets/projects/churn/Images/churn_distribution.png",
+
+        repo:
+            "https://github.com/Joelr-2026/Customer_Churn_Analysis",
+
+        metrics: [
+            {
+                value: "1,500",
+                label: "Customers"
+            },
+            {
+                value: "Python",
+                label: "EDA"
+            },
+            {
+                value: "Charts",
+                label: "Insights"
+            }
+        ],
+
+        workflow: [
+            "CSV",
+            "Pandas",
+            "Cleaning",
+            "EDA",
+            "Visualization",
+            "Insights"
+        ],
+
+        highlights: [
+            "Inspected customer, subscription, service and churn-related fields.",
+            "Cleaned inconsistent categorical values and handled missing data.",
+            "Compared churn across contract type, plan, city and signup channel.",
+            "Analyzed numerical factors including complaints, support calls, payments and tenure.",
+            "Created visualizations and summarized churn-related patterns."
+        ],
+
+        stack: [
+            "Python",
+            "Pandas",
+            "NumPy",
+            "Matplotlib",
+            "Seaborn",
+            "Jupyter"
+        ]
+
+    },
+
+
+    /* --------------------------------------------------------
+       ECOMMERCE SQL
+    --------------------------------------------------------- */
+    ecommerce: {
+
+        category:
+            "POSTGRESQL PROJECT",
+
+        title:
+            "Ecommerce SQL Analysis",
+
+        description:
+            "A SQL portfolio project using ecommerce data to answer revenue, customer, product, department and time-based business questions through progressively more advanced PostgreSQL queries.",
+
+        image:
+            "assets/projects/ecommerce-sql/Images/monthly_sales_trend.png",
+
+        repo:
+            "https://github.com/Joelr-2026/Ecommerce_SQL_Analysis",
+
+        metrics: [
+            {
+                value: "2,505",
+                label: "Records"
+            },
+            {
+                value: "SQL",
+                label: "Analysis"
+            },
+            {
+                value: "PostgreSQL",
+                label: "Database"
+            }
+        ],
+
+        workflow: [
+            "Raw Data",
+            "PostgreSQL",
+            "Validation",
+            "Business Queries",
+            "Advanced SQL",
+            "Insights"
+        ],
+
+        highlights: [
+            "Created and validated the PostgreSQL analysis table.",
+            "Used filtering, grouping, CASE expressions and aggregations.",
+            "Used joins, subqueries, CTEs and window functions.",
+            "Analyzed sales trends, product performance and customer behavior.",
+            "Produced department rankings and month-over-month analysis."
+        ],
+
+        stack: [
+            "PostgreSQL",
+            "SQL",
+            "CTEs",
+            "Subqueries",
+            "Window Functions"
+        ]
+
+    },
+
+
+    /* --------------------------------------------------------
+       FOOD DELIVERY
+    --------------------------------------------------------- */
+    food: {
+
+        category:
+            "POWER BI PROJECT",
+
+        title:
+            "Food Delivery Power BI Analysis",
+
+        description:
+            "A Power BI portfolio project transforming raw food-delivery data into a cleaned analytical model, KPI reporting and an interactive dashboard.",
+
+        image:
+            "assets/projects/food-delivery/Images/food_delivery_dashboard.png",
+
+        repo:
+            "https://github.com/Joelr-2026/Food_Delivery_PowerBI_Analysis",
+
+        metrics: [
+            {
+                value: "2,000",
+                label: "Records"
+            },
+            {
+                value: "Power BI",
+                label: "Dashboard"
+            },
+            {
+                value: "DAX",
+                label: "KPIs"
+            }
+        ],
+
+        workflow: [
+            "Raw Data",
+            "Power Query",
+            "Cleaning",
+            "Data Model",
+            "DAX",
+            "Dashboard"
+        ],
+
+        highlights: [
+            "Cleaned and transformed delivery data using Power Query.",
+            "Created analytical fields and business KPIs.",
+            "Built DAX measures for reporting.",
+            "Added interactive slicers and dashboard visuals.",
+            "Summarized operational patterns through a recruiter-ready Power BI dashboard."
+        ],
+
+        stack: [
+            "Power BI",
+            "Power Query",
+            "DAX",
+            "Data Visualization"
+        ]
+
+    },
+
+
+    /* --------------------------------------------------------
+       RETAIL SALES
+    --------------------------------------------------------- */
+    retail: {
+
+        category:
+            "EXCEL ANALYTICS",
+
+        title:
+            "Retail Sales Excel Analysis",
+
+        description:
+            "An Excel portfolio project using Power Query, formulas, PivotTables, PivotCharts and slicers to analyze retail sales and build an interactive dashboard.",
+
+        image:
+            "assets/projects/retail-sales/Images/retail_sales_dashboard.png",
+
+        repo:
+            "https://github.com/Joelr-2026/Retail-Sales-Excel-Analysis",
+
+        metrics: [
+            {
+                value: "1,205",
+                label: "Records"
+            },
+            {
+                value: "Excel",
+                label: "Analysis"
+            },
+            {
+                value: "Dashboard",
+                label: "Output"
+            }
+        ],
+
+        workflow: [
+            "CSV",
+            "Power Query",
+            "Cleaning",
+            "Excel Analysis",
+            "PivotTables",
+            "Dashboard"
+        ],
+
+        highlights: [
+            "Prepared retail sales data for analysis.",
+            "Used Excel formulas and structured analysis techniques.",
+            "Built PivotTables and PivotCharts for key business questions.",
+            "Added KPI cards and slicers for interactive reporting.",
+            "Created a portfolio-ready retail sales dashboard."
+        ],
+
+        stack: [
+            "Microsoft Excel",
+            "Power Query",
+            "PivotTables",
+            "PivotCharts",
+            "Slicers"
+        ]
 
     }
 
+};
 
 
-    document
-      .addEventListener(
-        "keydown",
-        (event) => {
+
+/* ============================================================
+   10. PROJECT MODAL ELEMENTS
+============================================================ */
+
+const projectModal =
+    document.getElementById(
+        "projectModal"
+    );
 
 
-          if (
-            event.key ===
-            "Escape" &&
-            modal &&
-            modal.classList
-              .contains(
-                "open"
-              )
-          ) {
+const modalClose =
+    document.getElementById(
+        "modalClose"
+    );
 
-            closeModal();
 
-          }
+const modalImage =
+    document.getElementById(
+        "modalImage"
+    );
+
+
+const modalCategory =
+    document.getElementById(
+        "modalCategory"
+    );
+
+
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
+
+
+const modalDescription =
+    document.getElementById(
+        "modalDescription"
+    );
+
+
+const modalMetrics =
+    document.getElementById(
+        "modalMetrics"
+    );
+
+
+const modalWorkflow =
+    document.getElementById(
+        "modalWorkflow"
+    );
+
+
+const modalHighlights =
+    document.getElementById(
+        "modalHighlights"
+    );
+
+
+const modalStack =
+    document.getElementById(
+        "modalStack"
+    );
+
+
+const modalGithub =
+    document.getElementById(
+        "modalGithub"
+    );
+
+
+
+/* ============================================================
+   11. OPEN PROJECT MODAL
+============================================================ */
+
+function openProjectModal(
+    projectKey
+) {
+
+    const project =
+        projectData[
+            projectKey
+        ];
+
+
+    if (
+        !project ||
+        !projectModal
+    ) {
+        return;
+    }
+
+
+    modalImage.src =
+        project.image;
+
+
+    modalImage.alt =
+        `${project.title} preview`;
+
+
+    modalCategory.textContent =
+        project.category;
+
+
+    modalTitle.textContent =
+        project.title;
+
+
+    modalDescription.textContent =
+        project.description;
+
+
+    /* METRICS */
+    modalMetrics.innerHTML =
+        "";
+
+
+    project.metrics.forEach(
+        (metric) => {
+
+            const metricElement =
+                document.createElement(
+                    "div"
+                );
+
+
+            metricElement.className =
+                "modal-metric";
+
+
+            const value =
+                document.createElement(
+                    "strong"
+                );
+
+
+            value.textContent =
+                metric.value;
+
+
+            const label =
+                document.createElement(
+                    "span"
+                );
+
+
+            label.textContent =
+                metric.label;
+
+
+            metricElement.append(
+                value,
+                label
+            );
+
+
+            modalMetrics.appendChild(
+                metricElement
+            );
 
         }
-      );
+    );
+
+
+    /* WORKFLOW */
+    modalWorkflow.innerHTML =
+        "";
+
+
+    project.workflow.forEach(
+        (step) => {
+
+            const stepElement =
+                document.createElement(
+                    "span"
+                );
+
+
+            stepElement.textContent =
+                step;
+
+
+            modalWorkflow.appendChild(
+                stepElement
+            );
+
+        }
+    );
+
+
+    /* HIGHLIGHTS */
+    modalHighlights.innerHTML =
+        "";
+
+
+    project.highlights.forEach(
+        (highlight) => {
+
+            const listItem =
+                document.createElement(
+                    "li"
+                );
+
+
+            listItem.textContent =
+                highlight;
+
+
+            modalHighlights.appendChild(
+                listItem
+            );
+
+        }
+    );
+
+
+    /* STACK */
+    modalStack.innerHTML =
+        "";
+
+
+    project.stack.forEach(
+        (tool) => {
+
+            const toolElement =
+                document.createElement(
+                    "span"
+                );
+
+
+            toolElement.textContent =
+                tool;
+
+
+            modalStack.appendChild(
+                toolElement
+            );
+
+        }
+    );
+
+
+    /* PROJECT-SPECIFIC GITHUB LINK */
+    modalGithub.href =
+        project.repo;
+
+
+    projectModal.classList.add(
+        "open"
+    );
+
+
+    projectModal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    modalClose?.focus();
+
+}
 
 
 
-    /* ========================================================
-       13 / CURRENT YEAR
-    ======================================================== */
+/* ============================================================
+   12. CLOSE PROJECT MODAL
+============================================================ */
 
-    const currentYear =
-      document.getElementById(
-        "currentYear"
-      );
+function closeProjectModal() {
 
-
-    if (
-      currentYear
-    ) {
-
-      currentYear.textContent =
-        new Date()
-          .getFullYear();
-
+    if (!projectModal) {
+        return;
     }
 
 
-  }
+    projectModal.classList.remove(
+        "open"
+    );
+
+
+    projectModal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+
+/* ============================================================
+   13. CASE STUDY BUTTON EVENTS
+============================================================ */
+
+document
+    .querySelectorAll(
+        ".case-study-button"
+    )
+    .forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const projectKey =
+                        button.dataset
+                            .project;
+
+
+                    openProjectModal(
+                        projectKey
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+
+/* ============================================================
+   14. MODAL CLOSE EVENTS
+============================================================ */
+
+modalClose?.addEventListener(
+    "click",
+    closeProjectModal
 );
+
+
+document
+    .querySelectorAll(
+        "[data-close-modal]"
+    )
+    .forEach(
+        (element) => {
+
+            element.addEventListener(
+                "click",
+                closeProjectModal
+            );
+
+        }
+    );
+
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape" &&
+            projectModal
+                ?.classList
+                .contains("open")
+        ) {
+
+            closeProjectModal();
+
+        }
+
+    }
+);
+
+
+
+/* ============================================================
+   15. CURRENT YEAR
+============================================================ */
+
+const currentYear =
+    document.getElementById(
+        "currentYear"
+    );
+
+
+if (currentYear) {
+
+    currentYear.textContent =
+        new Date()
+            .getFullYear();
+
+}
