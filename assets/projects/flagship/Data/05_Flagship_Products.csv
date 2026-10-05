@@ -1,0 +1,151 @@
+﻿Product_ID,Category,Product_Type,Product_Name,List_Price,Unit_Cost,Supplier
+FP0001,Home,Bedsheet,Nova-001,210.57,109.8,Alpha Suppliers
+FP0002,Home,Cookware,Urban-002,6892.88,4471.71,ValueSource
+FP0003,Home,Cookware,Nova-003,7444.42,3849.78,NorthStar Trade
+FP0004,Fashion,Shoes,Pulse-004,2567.54,1440.44,Metro Wholesale
+FP0005,Beauty,Serum,Pulse-005,936.51,425.6,Metro Wholesale
+FP0006,Home,Bedsheet,Aster-006,2389.7,1289.14,Metro Wholesale
+FP0007,Home,Mixer,Eco-007,8720.63,5862.18,ValueSource
+FP0008,Beauty,Shampoo,Nova-008,573.37,442.69,ValueSource
+FP0009,Beauty,Face Wash,Urban-009,5129.07,2612.03,Prime Distribution
+FP0010,Beauty,Face Wash,Pulse-010,4028.79,2793.37,Metro Wholesale
+FP0011,Home,Bedsheet,Pulse-011,4973.23,3791.52,NorthStar Trade
+FP0012,Home,Lamp,Urban-012,5731.62,3821.21,NorthStar Trade
+FP0013,Fashion,Jeans,Pulse-013,5090.72,2711.27,Alpha Suppliers
+FP0014,Home,Mixer,Urban-014,2335.19,1106.91,Metro Wholesale
+FP0015,Home,Bottle,Pulse-015,8865.5,6734.84,ValueSource
+FP0016,Electronics,Keyboard,Urban-016,2502.51,1284.44,Alpha Suppliers
+FP0017,Beauty,Serum,Prime-017,1613.62,1022.91,Prime Distribution
+FP0018,Fashion,Shoes,Pulse-018,4845.28,3048.47,ValueSource
+FP0019,Electronics,Mouse,Pulse-019,3439.44,2175.5,NorthStar Trade
+FP0020,Home,Bottle,Nova-020,7904.14,3886.84,ValueSource
+FP0021,Home,Mixer,Prime-021,5809.66,3913.12,NorthStar Trade
+FP0022,Beauty,Perfume,Nova-022,5006.4,3573.9,Alpha Suppliers
+FP0023,Fashion,Shoes,Eco-023,4930.6,2575.99,Alpha Suppliers
+FP0024,Beauty,Serum,Urban-024,723.69,405.14,Prime Distribution
+FP0025,Home,Bedsheet,Prime-025,3658.51,1747.17,Metro Wholesale
+FP0026,Electronics,Smartwatch,Eco-026,8378.01,5231.0,Alpha Suppliers
+FP0027,Fashion,Jeans,Eco-027,2801.39,2165.01,NorthStar Trade
+FP0028,Fashion,T-Shirt,Prime-028,1252.8,831.78,NorthStar Trade
+FP0029,Home,Mixer,Nova-029,8582.57,6233.86,Prime Distribution
+FP0030,Home,Bottle,Urban-030,7057.58,4816.42,Alpha Suppliers
+FP0031,Beauty,Shampoo,Pulse-031,938.39,704.71,Alpha Suppliers
+FP0032,Home,Bedsheet,Aster-032,5585.91,3356.22,ValueSource
+FP0033,Beauty,Face Wash,Aster-033,2599.62,1463.46,NorthStar Trade
+FP0034,Electronics,Smartwatch,Prime-034,4479.24,2186.83,Prime Distribution
+FP0035,Electronics,Smartwatch,Eco-035,8849.44,6809.7,Metro Wholesale
+FP0036,Electronics,Mouse,Pulse-036,7738.34,5200.24,Prime Distribution
+FP0037,Beauty,Sunscreen,Nova-037,1147.6,770.48,Metro Wholesale
+FP0038,Home,Lamp,Pulse-038,2344.11,1686.66,NorthStar Trade
+FP0039,Electronics,Power Bank,Prime-039,2919.84,1373.43,ValueSource
+FP0040,Home,Lamp,Eco-040,1044.51,505.46,Alpha Suppliers
+FP0041,Fashion,Backpack,Nova-041,4109.96,1929.97,Alpha Suppliers
+FP0042,Fashion,Backpack,Eco-042,1367.6,903.16,ValueSource
+FP0043,Beauty,Face Wash,Urban-043,2276.32,1405.27,ValueSource
+FP0044,Beauty,Shampoo,Pulse-044,1760.04,832.91,Prime Distribution
+FP0045,Fashion,T-Shirt,Nova-045,3811.34,2210.75,NorthStar Trade
+FP0046,Beauty,Serum,Urban-046,4437.46,2588.95,Prime Distribution
+FP0047,Fashion,T-Shirt,Prime-047,8632.68,3928.49,Alpha Suppliers
+FP0048,Electronics,Smartwatch,Nova-048,5765.37,3929.59,ValueSource
+FP0049,Electronics,Keyboard,Prime-049,3120.66,2148.06,Metro Wholesale
+FP0050,Electronics,Headphones,Eco-050,3182.54,2366.24,Alpha Suppliers
+FP0051,Fashion,Jeans,Urban-051,362.42,225.4,Alpha Suppliers
+FP0052,Beauty,Serum,Aster-052,7579.42,5902.53,Alpha Suppliers
+FP0053,Home,Mixer,Aster-053,439.66,231.57,ValueSource
+FP0054,Home,Bedsheet,Prime-054,3389.15,1927.83,Metro Wholesale
+FP0055,Beauty,Serum,Aster-055,5232.43,3680.36,NorthStar Trade
+FP0056,Electronics,Mouse,Prime-056,2313.97,1765.16,Prime Distribution
+FP0057,Fashion,T-Shirt,Aster-057,2898.29,2073.55,Prime Distribution
+FP0058,Home,Bottle,Eco-058,7791.14,4809.46,NorthStar Trade
+FP0059,Electronics,Mouse,Aster-059,6932.62,3820.27,Metro Wholesale
+FP0060,Beauty,Sunscreen,Eco-060,1889.38,894.22,Prime Distribution
+FP0061,Electronics,Mouse,Prime-061,3489.93,1932.27,Prime Distribution
+FP0062,Electronics,Keyboard,Nova-062,6579.03,2975.72,Prime Distribution
+FP0063,Beauty,Serum,Prime-063,5604.39,3571.53,Alpha Suppliers
+FP0064,Home,Mixer,Nova-064,6408.04,4371.9,ValueSource
+FP0065,Beauty,Perfume,Prime-065,6416.13,3023.35,NorthStar Trade
+FP0066,Beauty,Sunscreen,Eco-066,6676.95,4515.63,Alpha Suppliers
+FP0067,Home,Bottle,Eco-067,1512.27,1008.69,Metro Wholesale
+FP0068,Beauty,Face Wash,Nova-068,7649.03,5288.1,Metro Wholesale
+FP0069,Fashion,T-Shirt,Eco-069,3524.08,2556.38,Metro Wholesale
+FP0070,Beauty,Perfume,Urban-070,240.31,129.67,NorthStar Trade
+FP0071,Electronics,Power Bank,Urban-071,1700.58,1272.24,ValueSource
+FP0072,Home,Cookware,Aster-072,8536.96,4854.29,Metro Wholesale
+FP0073,Home,Lamp,Nova-073,3772.01,2077.36,Metro Wholesale
+FP0074,Electronics,Smartwatch,Eco-074,7560.0,5328.4,NorthStar Trade
+FP0075,Electronics,Smartwatch,Prime-075,1589.63,727.21,NorthStar Trade
+FP0076,Fashion,Shoes,Eco-076,2384.81,1451.32,ValueSource
+FP0077,Beauty,Sunscreen,Pulse-077,5603.86,2756.45,NorthStar Trade
+FP0078,Beauty,Shampoo,Pulse-078,2259.44,1396.93,Prime Distribution
+FP0079,Home,Lamp,Pulse-079,8401.85,5544.42,ValueSource
+FP0080,Electronics,Keyboard,Nova-080,5963.59,3206.19,Prime Distribution
+FP0081,Beauty,Sunscreen,Pulse-081,6700.25,3169.28,Metro Wholesale
+FP0082,Fashion,Shoes,Pulse-082,3600.56,2404.73,NorthStar Trade
+FP0083,Home,Cookware,Eco-083,588.68,329.48,Alpha Suppliers
+FP0084,Beauty,Serum,Nova-084,5736.42,3782.27,NorthStar Trade
+FP0085,Electronics,Smartwatch,Aster-085,4839.7,2484.14,NorthStar Trade
+FP0086,Home,Bottle,Aster-086,3161.12,1741.26,ValueSource
+FP0087,Electronics,Headphones,Eco-087,4087.92,2146.48,Prime Distribution
+FP0088,Fashion,Jacket,Pulse-088,3685.01,2269.49,Metro Wholesale
+FP0089,Beauty,Perfume,Eco-089,7208.67,4928.6,ValueSource
+FP0090,Beauty,Perfume,Prime-090,7705.8,4156.62,NorthStar Trade
+FP0091,Home,Bedsheet,Prime-091,4842.26,3775.55,NorthStar Trade
+FP0092,Electronics,Headphones,Aster-092,1308.85,841.49,NorthStar Trade
+FP0093,Electronics,Smartwatch,Eco-093,717.83,377.51,NorthStar Trade
+FP0094,Fashion,Jeans,Nova-094,8583.13,4488.1,NorthStar Trade
+FP0095,Fashion,Backpack,Pulse-095,4214.31,3248.61,Alpha Suppliers
+FP0096,Beauty,Serum,Urban-096,7777.95,3985.65,Alpha Suppliers
+FP0097,Beauty,Sunscreen,Prime-097,408.56,307.98,Prime Distribution
+FP0098,Fashion,Shoes,Prime-098,8268.49,5495.5,Metro Wholesale
+FP0099,Electronics,Mouse,Pulse-099,8753.38,4633.69,NorthStar Trade
+FP0100,Beauty,Perfume,Urban-100,2392.72,1202.14,ValueSource
+FP0101,Electronics,Power Bank,Pulse-101,1034.69,760.13,Prime Distribution
+FP0102,Beauty,Serum,Urban-102,7850.95,5611.12,ValueSource
+FP0103,Electronics,Power Bank,Eco-103,4863.91,2522.53,NorthStar Trade
+FP0104,Home,Lamp,Eco-104,7540.37,3922.43,Prime Distribution
+FP0105,Home,Bedsheet,Pulse-105,7024.21,5157.79,Alpha Suppliers
+FP0106,Home,Mixer,Urban-106,5985.79,3860.22,Metro Wholesale
+FP0107,Fashion,Backpack,Aster-107,8729.85,5317.27,NorthStar Trade
+FP0108,Electronics,Headphones,Eco-108,6123.84,4450.52,Metro Wholesale
+FP0109,Beauty,Shampoo,Prime-109,6224.56,3948.58,NorthStar Trade
+FP0110,Electronics,Smartwatch,Eco-110,504.22,384.8,ValueSource
+FP0111,Home,Bottle,Prime-111,2277.23,1263.35,NorthStar Trade
+FP0112,Beauty,Serum,Aster-112,7352.99,4384.88,ValueSource
+FP0113,Home,Bottle,Nova-113,6018.81,4180.43,NorthStar Trade
+FP0114,Electronics,Smartwatch,Nova-114,4147.68,1916.82,Alpha Suppliers
+FP0115,Electronics,Mouse,Eco-115,2713.67,2090.73,Alpha Suppliers
+FP0116,Fashion,T-Shirt,Aster-116,7401.76,5008.95,Prime Distribution
+FP0117,Electronics,Mouse,Pulse-117,3955.57,2541.82,NorthStar Trade
+FP0118,Fashion,Shoes,Urban-118,5177.32,2841.36,Metro Wholesale
+FP0119,Beauty,Shampoo,Prime-119,8688.16,5844.97,Metro Wholesale
+FP0120,Beauty,Serum,Aster-120,1814.22,851.73,Prime Distribution
+FP0121,Beauty,Perfume,Aster-121,4465.29,2082.53,ValueSource
+FP0122,Beauty,Shampoo,Aster-122,1597.73,1030.65,Alpha Suppliers
+FP0123,Fashion,Backpack,Prime-123,8591.64,5738.09,NorthStar Trade
+FP0124,Electronics,Power Bank,Prime-124,4028.63,2502.73,NorthStar Trade
+FP0125,Beauty,Face Wash,Aster-125,3663.38,2702.84,Prime Distribution
+FP0126,Beauty,Serum,Nova-126,8367.43,4192.62,Alpha Suppliers
+FP0127,Fashion,Shoes,Urban-127,2634.4,1540.51,Metro Wholesale
+FP0128,Beauty,Face Wash,Aster-128,6621.29,5147.82,NorthStar Trade
+FP0129,Home,Mixer,Nova-129,8281.13,5277.5,Prime Distribution
+FP0130,Fashion,Backpack,Eco-130,3439.37,2232.23,Metro Wholesale
+FP0131,Electronics,Keyboard,Nova-131,5348.1,3575.05,Metro Wholesale
+FP0132,Beauty,Perfume,Pulse-132,8467.19,5406.01,Prime Distribution
+FP0133,Beauty,Shampoo,Aster-133,3028.5,2086.64,NorthStar Trade
+FP0134,Electronics,Headphones,Eco-134,6168.72,3134.73,Alpha Suppliers
+FP0135,Home,Cookware,Nova-135,3393.68,1708.4,Alpha Suppliers
+FP0136,Beauty,Serum,Pulse-136,2234.55,1705.94,ValueSource
+FP0137,Beauty,Face Wash,Aster-137,5774.99,3556.63,NorthStar Trade
+FP0138,Electronics,Power Bank,Aster-138,8119.99,5002.34,Metro Wholesale
+FP0139,Electronics,Headphones,Aster-139,2943.02,2023.35,ValueSource
+FP0140,Home,Bedsheet,Aster-140,2871.91,1663.46,Prime Distribution
+FP0141,Beauty,Shampoo,Urban-141,8678.41,4959.58,Alpha Suppliers
+FP0142,Fashion,Jeans,Aster-142,2779.44,1550.48,Metro Wholesale
+FP0143,Fashion,T-Shirt,Urban-143,8786.1,6599.64,Prime Distribution
+FP0144,Beauty,Face Wash,Pulse-144,1851.64,1264.6,ValueSource
+FP0145,Beauty,Serum,Prime-145,7366.74,4689.21,Alpha Suppliers
+FP0146,Beauty,Face Wash,Eco-146,8900.1,5632.73,Prime Distribution
+FP0147,Beauty,Sunscreen,Eco-147,6012.15,4281.26,ValueSource
+FP0148,Electronics,Smartwatch,Nova-148,2392.78,1144.46,NorthStar Trade
+FP0149,Fashion,Jeans,Eco-149,6293.48,4730.92,Metro Wholesale
+FP0150,Home,Cookware,Urban-150,1525.45,983.03,Alpha Suppliers
