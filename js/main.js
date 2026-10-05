@@ -217,10 +217,38 @@ const primaryNav =
     );
 
 
+function closeMobileMenu() {
+
+    if (
+        !primaryNav ||
+        !mobileMenuButton
+    ) {
+        return;
+    }
+
+
+    primaryNav
+        .classList
+        .remove("open");
+
+
+    mobileMenuButton
+        .setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+}
+
+
 if (
     mobileMenuButton &&
     primaryNav
 ) {
+
+    /* --------------------------------------------------------
+       MENU BUTTON TOGGLE
+    --------------------------------------------------------- */
 
     mobileMenuButton
         .addEventListener(
@@ -245,6 +273,10 @@ if (
         );
 
 
+    /* --------------------------------------------------------
+       NAV LINK CLICK = CLOSE MENU
+    --------------------------------------------------------- */
+
     primaryNav
         .querySelectorAll(
             "a"
@@ -256,18 +288,7 @@ if (
                     "click",
                     () => {
 
-                        primaryNav
-                            .classList
-                            .remove(
-                                "open"
-                            );
-
-
-                        mobileMenuButton
-                            .setAttribute(
-                                "aria-expanded",
-                                "false"
-                            );
+                        closeMobileMenu();
 
                     }
                 );
@@ -275,12 +296,171 @@ if (
             }
         );
 
+
+    /* --------------------------------------------------------
+       OUTSIDE TAP / CLICK = CLOSE MENU
+    --------------------------------------------------------- */
+
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            const isMenuOpen =
+                primaryNav
+                    .classList
+                    .contains(
+                        "open"
+                    );
+
+
+            if (!isMenuOpen) {
+                return;
+            }
+
+
+            const clickedInsideMenu =
+                primaryNav.contains(
+                    event.target
+                );
+
+
+            const clickedMenuButton =
+                mobileMenuButton.contains(
+                    event.target
+                );
+
+
+            if (
+                !clickedInsideMenu &&
+                !clickedMenuButton
+            ) {
+
+                closeMobileMenu();
+
+            }
+
+        }
+    );
+
+
+    /* --------------------------------------------------------
+       ESCAPE KEY = CLOSE MENU
+    --------------------------------------------------------- */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeMobileMenu();
+
+            }
+
+        }
+    );
+
 }
 
 
 
 /* ============================================================
-   05. SMOOTH INTERNAL LINKS
+   05. MOBILE MENU AUTO-CLOSE ON SCROLL
+============================================================ */
+
+let menuScrollStart =
+    window.scrollY;
+
+
+let menuWasOpen =
+    false;
+
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (
+            !primaryNav ||
+            !mobileMenuButton
+        ) {
+            return;
+        }
+
+
+        const isMenuOpen =
+            primaryNav
+                .classList
+                .contains(
+                    "open"
+                );
+
+
+        const currentScrollY =
+            window.scrollY;
+
+
+        if (
+            isMenuOpen &&
+            !menuWasOpen
+        ) {
+
+            menuScrollStart =
+                currentScrollY;
+
+            menuWasOpen =
+                true;
+
+        }
+
+
+        if (!isMenuOpen) {
+
+            menuWasOpen =
+                false;
+
+            return;
+
+        }
+
+
+        const distanceScrolled =
+            Math.abs(
+                currentScrollY -
+                menuScrollStart
+            );
+
+
+        /*
+           Small accidental finger movement ko ignore karte hain.
+           Proper scroll hone par menu close hoga.
+        */
+
+        if (
+            distanceScrolled >
+            12
+        ) {
+
+            closeMobileMenu();
+
+            menuWasOpen =
+                false;
+
+        }
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+
+/* ============================================================
+   06. SMOOTH INTERNAL LINKS
 ============================================================ */
 
 document
@@ -344,7 +524,7 @@ document
 
 
 /* ============================================================
-   06. ACTIVE NAVBAR SECTION
+   07. ACTIVE NAVBAR SECTION
 ============================================================ */
 
 const navLinks =
@@ -430,7 +610,7 @@ trackedSections.forEach(
 
 
 /* ============================================================
-   07. PROFILE 3D / MOBILE AUTO ANIMATION
+   08. PROFILE 3D / MOBILE AUTO ANIMATION
 ============================================================ */
 
 const profileStage =
@@ -539,10 +719,9 @@ if (
 
     else {
 
-        let animationFrameId = null;
-
         let startTime =
             performance.now();
+
 
         let touchActive =
             false;
@@ -591,18 +770,16 @@ if (
             }
 
 
-            animationFrameId =
-                requestAnimationFrame(
-                    animateMobileCard
-                );
+            requestAnimationFrame(
+                animateMobileCard
+            );
 
         }
 
 
-        animationFrameId =
-            requestAnimationFrame(
-                animateMobileCard
-            );
+        requestAnimationFrame(
+            animateMobileCard
+        );
 
 
         /* ----------------------------------------------------
@@ -713,7 +890,7 @@ if (
 
 
 /* ============================================================
-   08. COPY EMAIL
+   09. COPY EMAIL
 ============================================================ */
 
 const copyEmailButton =
@@ -786,7 +963,7 @@ if (
 
 
 /* ============================================================
-   09. PROJECT DATA
+   10. PROJECT DATA
 ============================================================ */
 
 const projectData = {
@@ -809,26 +986,21 @@ const projectData = {
             "https://github.com/Joelr-2026/Flagship_End_to_End_Analytics",
 
         metrics: [
-
             {
                 value: "800",
                 label: "Customers"
             },
-
             {
                 value: "150",
                 label: "Products"
             },
-
             {
                 value: "3,005",
                 label: "Orders"
             }
-
         ],
 
         workflow: [
-
             "Raw CSV",
             "PostgreSQL",
             "Data Validation",
@@ -836,31 +1008,22 @@ const projectData = {
             "Python EDA",
             "Power BI",
             "Business Insights"
-
         ],
 
         highlights: [
-
             "Structured relational tables and validated source data before analysis.",
-
             "Used SQL to analyze sales, customers, products, categories and profitability.",
-
             "Used Python and Pandas for exploratory analysis and supporting visualizations.",
-
             "Built a Power BI dashboard for revenue, profit, customer and product performance.",
-
             "Converted analysis results into business-focused findings and recommendations."
-
         ],
 
         stack: [
-
             "PostgreSQL",
             "SQL",
             "Python",
             "Pandas",
             "Power BI"
-
         ]
 
     },
@@ -884,56 +1047,42 @@ const projectData = {
             "https://github.com/Joelr-2026/Inventory_Optimization---Demand_Planning_project",
 
         metrics: [
-
             {
                 value: "1,048,575",
                 label: "Demand Records"
             },
-
             {
                 value: "10,469",
                 label: "Negative Demand"
             },
-
             {
                 value: "11,239",
                 label: "Missing Dates"
             }
-
         ],
 
         workflow: [
-
             "Demand Data",
             "PostgreSQL",
             "Validation",
             "Business Analysis",
             "Power BI",
             "Dashboard"
-
         ],
 
         highlights: [
-
             "Loaded and inspected large-volume inventory demand data.",
-
             "Investigated missing dates, negative demand values and duplicate-looking records.",
-
             "Used SQL for validation and structured business analysis.",
-
             "Created dashboard KPIs, trends and product-level demand views.",
-
             "Focused on practical demand-planning and inventory reporting questions."
-
         ],
 
         stack: [
-
             "PostgreSQL",
             "SQL",
             "Power BI",
             "DAX"
-
         ]
 
     },
@@ -957,58 +1106,44 @@ const projectData = {
             "https://github.com/Joelr-2026/Customer_Churn_Analysis",
 
         metrics: [
-
             {
                 value: "1,500",
                 label: "Customers"
             },
-
             {
                 value: "Python",
                 label: "EDA"
             },
-
             {
                 value: "Charts",
                 label: "Insights"
             }
-
         ],
 
         workflow: [
-
             "CSV",
             "Pandas",
             "Cleaning",
             "EDA",
             "Visualization",
             "Insights"
-
         ],
 
         highlights: [
-
             "Inspected customer, subscription, service and churn-related fields.",
-
             "Cleaned inconsistent categorical values and handled missing data.",
-
             "Compared churn across contract type, plan, city and signup channel.",
-
             "Analyzed numerical factors including complaints, support calls, payments and tenure.",
-
             "Created visualizations and summarized churn-related patterns."
-
         ],
 
         stack: [
-
             "Python",
             "Pandas",
             "NumPy",
             "Matplotlib",
             "Seaborn",
             "Jupyter"
-
         ]
 
     },
@@ -1032,57 +1167,43 @@ const projectData = {
             "https://github.com/Joelr-2026/Ecommerce_SQL_Analysis",
 
         metrics: [
-
             {
                 value: "2,505",
                 label: "Records"
             },
-
             {
                 value: "SQL",
                 label: "Analysis"
             },
-
             {
                 value: "PostgreSQL",
                 label: "Database"
             }
-
         ],
 
         workflow: [
-
             "Raw Data",
             "PostgreSQL",
             "Validation",
             "Business Queries",
             "Advanced SQL",
             "Insights"
-
         ],
 
         highlights: [
-
             "Created and validated the PostgreSQL analysis table.",
-
             "Used filtering, grouping, CASE expressions and aggregations.",
-
             "Used joins, subqueries, CTEs and window functions.",
-
             "Analyzed sales trends, product performance and customer behavior.",
-
             "Produced department rankings and month-over-month analysis."
-
         ],
 
         stack: [
-
             "PostgreSQL",
             "SQL",
             "CTEs",
             "Subqueries",
             "Window Functions"
-
         ]
 
     },
@@ -1106,56 +1227,42 @@ const projectData = {
             "https://github.com/Joelr-2026/Food_Delivery_PowerBI_Analysis",
 
         metrics: [
-
             {
                 value: "2,000",
                 label: "Records"
             },
-
             {
                 value: "Power BI",
                 label: "Dashboard"
             },
-
             {
                 value: "DAX",
                 label: "KPIs"
             }
-
         ],
 
         workflow: [
-
             "Raw Data",
             "Power Query",
             "Cleaning",
             "Data Model",
             "DAX",
             "Dashboard"
-
         ],
 
         highlights: [
-
             "Cleaned and transformed delivery data using Power Query.",
-
             "Created analytical fields and business KPIs.",
-
             "Built DAX measures for reporting.",
-
             "Added interactive slicers and dashboard visuals.",
-
             "Summarized operational patterns through a recruiter-ready Power BI dashboard."
-
         ],
 
         stack: [
-
             "Power BI",
             "Power Query",
             "DAX",
             "Data Visualization"
-
         ]
 
     },
@@ -1179,57 +1286,43 @@ const projectData = {
             "https://github.com/Joelr-2026/Retail-Sales-Excel-Analysis",
 
         metrics: [
-
             {
                 value: "1,205",
                 label: "Records"
             },
-
             {
                 value: "Excel",
                 label: "Analysis"
             },
-
             {
                 value: "Dashboard",
                 label: "Output"
             }
-
         ],
 
         workflow: [
-
             "CSV",
             "Power Query",
             "Cleaning",
             "Excel Analysis",
             "PivotTables",
             "Dashboard"
-
         ],
 
         highlights: [
-
             "Prepared retail sales data for analysis.",
-
             "Used Excel formulas and structured analysis techniques.",
-
             "Built PivotTables and PivotCharts for key business questions.",
-
             "Added KPI cards and slicers for interactive reporting.",
-
             "Created a portfolio-ready retail sales dashboard."
-
         ],
 
         stack: [
-
             "Microsoft Excel",
             "Power Query",
             "PivotTables",
             "PivotCharts",
             "Slicers"
-
         ]
 
     }
@@ -1239,7 +1332,7 @@ const projectData = {
 
 
 /* ============================================================
-   10. PROJECT MODAL ELEMENTS
+   11. PROJECT MODAL ELEMENTS
 ============================================================ */
 
 const projectModal =
@@ -1310,7 +1403,7 @@ const modalGithub =
 
 
 /* ============================================================
-   11. OPEN PROJECT MODAL
+   12. OPEN PROJECT MODAL
 ============================================================ */
 
 function openProjectModal(
@@ -1352,8 +1445,6 @@ function openProjectModal(
     modalDescription.textContent =
         project.description;
 
-
-    /* METRICS */
 
     modalMetrics.innerHTML =
         "";
@@ -1407,8 +1498,6 @@ function openProjectModal(
     );
 
 
-    /* WORKFLOW */
-
     modalWorkflow.innerHTML =
         "";
 
@@ -1434,8 +1523,6 @@ function openProjectModal(
         }
     );
 
-
-    /* HIGHLIGHTS */
 
     modalHighlights.innerHTML =
         "";
@@ -1463,8 +1550,6 @@ function openProjectModal(
     );
 
 
-    /* STACK */
-
     modalStack.innerHTML =
         "";
 
@@ -1490,8 +1575,6 @@ function openProjectModal(
         }
     );
 
-
-    /* GITHUB */
 
     modalGithub.href =
         project.repo;
@@ -1522,7 +1605,7 @@ function openProjectModal(
 
 
 /* ============================================================
-   12. CLOSE PROJECT MODAL
+   13. CLOSE PROJECT MODAL
 ============================================================ */
 
 function closeProjectModal() {
@@ -1554,7 +1637,7 @@ function closeProjectModal() {
 
 
 /* ============================================================
-   13. CASE STUDY BUTTONS
+   14. CASE STUDY BUTTONS
 ============================================================ */
 
 document
@@ -1588,7 +1671,7 @@ document
 
 
 /* ============================================================
-   14. MODAL CLOSE EVENTS
+   15. MODAL CLOSE EVENTS
 ============================================================ */
 
 modalClose
@@ -1641,7 +1724,7 @@ document
 
 
 /* ============================================================
-   15. CURRENT YEAR
+   16. CURRENT YEAR
 ============================================================ */
 
 const currentYear =
